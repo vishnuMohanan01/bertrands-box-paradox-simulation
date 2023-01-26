@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import 'antd/dist/reset.css';
+
+// @import "";
+
+* {
+  margin: 0;
+  padding: 0;
+}
