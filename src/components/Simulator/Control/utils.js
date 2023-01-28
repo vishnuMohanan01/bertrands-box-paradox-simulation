@@ -1,24 +1,39 @@
-import { COIN_COMBINATIONS } from "../constants";
+import { COIN_COMBINATIONS, GG_BOX, SS_BOX, GOLD_COIN } from "../constants";
 
 export const getRandomElement = arr => arr[Math.floor(Math.random() * arr.length)];
 
-export const getRandomCoin = () => getRandomElement(getRandomElement(COIN_COMBINATIONS))
-
-export const pickACoin = ({ setIsLoading, setPickedCoin }) => {
-  setIsLoading(true);
-  setTimeout(() => {
-    setPickedCoin(getRandomCoin());
-    setIsLoading(false);
-  }, 2000);
+export const getRandomBoxAndCoin = () => {
+  const randomBox = getRandomElement(COIN_COMBINATIONS);
+  return [ randomBox, getRandomElement(randomBox) ];
 };
 
-export const runSimulation = ({ coin, numberOfSimulations, setProbabilityValue }) => {
-  new Promise((resolve, reject) => {
-    let numberOfTimesCoinPicked = 0;
+export const runSimulation = ({ numberOfSimulations, setProbabilityValues }) => {
+  new Promise((resolve, _) => {
+    const coinDraws = {
+      gold: 0,
+      silver: 0,
+    };
+    const coinRights = {
+      gold: 0,
+      silver: 0,
+    };
     for (let i = 0; i < numberOfSimulations; i++) {
-      if (getRandomCoin() === coin) numberOfTimesCoinPicked++;
+      const [selectedBox, selectedCoin] = getRandomBoxAndCoin();
+
+      if (JSON.stringify(selectedCoin) === JSON.stringify(GOLD_COIN)) {
+        ++coinDraws.gold;
+        if (JSON.stringify(selectedBox) === JSON.stringify(GG_BOX)) ++coinRights.gold;
+      }
+      else {
+        ++coinDraws.silver;
+        if (JSON.stringify(selectedBox) === JSON.stringify(SS_BOX)) ++coinRights.silver;
+      }
     }
-    setProbabilityValue(numberOfTimesCoinPicked/numberOfSimulations);
+    setProbabilityValues({
+      gold: coinRights.gold/coinDraws.gold,
+      silver: coinRights.silver/coinDraws.silver,
+      totalAccuracy: (coinRights.gold + coinRights.silver)/numberOfSimulations,
+    });
     return resolve();
   });
 };
