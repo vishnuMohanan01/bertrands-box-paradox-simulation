@@ -5,19 +5,19 @@ import { isEmpty } from "ramda";
 import { Button, Typography, Input } from "antd";
 import { runSimulation } from "./utils";
 
-const Form = ({ setProbabilityValues }) => {
+const Form = ({ setResults }) => {
   const [isSimulationRunning, setIsSimulationRunning] = useState(false);
   const [numberOfSimulations, setNumberOfSimulations] = useState(0);
 
   const { Text } = Typography;
 
   useEffect(() => {
-    if (isEmpty(numberOfSimulations)) setProbabilityValues(null);
+    if (isEmpty(numberOfSimulations)) setResults(null);
   }, [numberOfSimulations]);
 
   const handleClickOnRunSimulations = async () => {
     setIsSimulationRunning(true);
-    await runSimulation({ numberOfSimulations, setProbabilityValues });
+    await runSimulation({ numberOfSimulations, setResults });
     setIsSimulationRunning(false);
   };
 

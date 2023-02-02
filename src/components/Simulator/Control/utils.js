@@ -7,7 +7,7 @@ export const getRandomBoxAndCoin = () => {
   return [ randomBox, getRandomElement(randomBox) ];
 };
 
-export const runSimulation = ({ numberOfSimulations, setProbabilityValues }) => {
+export const runSimulation = ({ numberOfSimulations, setResults }) => {
   new Promise((resolve, _) => {
     const coinDraws = {
       gold: 0,
@@ -29,10 +29,14 @@ export const runSimulation = ({ numberOfSimulations, setProbabilityValues }) => 
         if (JSON.stringify(selectedBox) === JSON.stringify(SS_BOX)) ++coinRights.silver;
       }
     }
-    setProbabilityValues({
-      gold: coinRights.gold/coinDraws.gold,
-      silver: coinRights.silver/coinDraws.silver,
-      totalAccuracy: (coinRights.gold + coinRights.silver)/numberOfSimulations,
+    setResults({
+      coinDraw,
+      coinRight,
+      probabilities: {
+        gold: coinRights.gold/coinDraws.gold,
+        silver: coinRights.silver/coinDraws.silver,
+        totalAccuracy: (coinRights.gold + coinRights.silver)/numberOfSimulations,
+      }
     });
     return resolve();
   });
