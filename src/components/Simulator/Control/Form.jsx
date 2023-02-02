@@ -16,6 +16,7 @@ const Form = ({ setResults }) => {
   }, [numberOfSimulations]);
 
   const handleClickOnRunSimulations = async () => {
+    console.log("rafrw 1");
     setIsSimulationRunning(true);
     await runSimulation({ numberOfSimulations, setResults });
     setIsSimulationRunning(false);

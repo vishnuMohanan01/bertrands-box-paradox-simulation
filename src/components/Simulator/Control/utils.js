@@ -30,11 +30,11 @@ export const runSimulation = ({ numberOfSimulations, setResults }) => {
       }
     }
     setResults({
-      coinDraw,
-      coinRight,
+      coinDraws,
+      coinRights,
       probabilities: {
-        gold: coinRights.gold/coinDraws.gold,
-        silver: coinRights.silver/coinDraws.silver,
+        gold: coinRights.gold ? coinRights.gold/coinDraws.gold : coinRights.gold ,
+        silver: coinRights.silver ? coinRights.silver/coinDraws.silver : coinRights.silver,
         totalAccuracy: (coinRights.gold + coinRights.silver)/numberOfSimulations,
       }
     });
