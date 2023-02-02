@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+
+import { Typography } from "antd";
+
 import { keys} from "ramda";
 import Form from "./Form";
 import Result from "./Result";
@@ -6,6 +9,8 @@ import ProbabilityGraph from "./assets/images/probability_graph.png";
 
 const Control = ({ isPickCoinLoading, setIsPickCoinLoading }) => {
   const [results, setResults] = useState(null);
+
+  const { Title } = Typography;
 
   const doesResultsExist = !!keys(results).length
 
@@ -20,7 +25,8 @@ const Control = ({ isPickCoinLoading, setIsPickCoinLoading }) => {
         <Result showResults={doesResultsExist} results={results} />
       </div>
       <div className="w-3/5 h-full flex flex-col justify-center items-center">
-        {doesResultsExist && <img src={ProbabilityGraph} alt="Probability graph" className="max-h-64" />}
+        <Title level={3}>Probabilty graph</Title>
+        {doesResultsExist && <img src={ProbabilityGraph} alt="Probability graph" className="max-h-56" />}
       </div>
     </div>
   );
